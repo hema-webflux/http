@@ -51,7 +51,6 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
         return null;
     }
 
-
     public Map<String, Object> except(String[] names) {
         return null;
     }
