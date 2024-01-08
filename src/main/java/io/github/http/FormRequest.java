@@ -11,9 +11,9 @@ import java.util.Map;
 @Component
 public class FormRequest implements InteractsWithInput, InteractsWithContentTypes, InitializingBean {
 
-    private ParameterBag headerBag;
+    private ParameterBag<String> headerBag;
 
-    private ParameterBag inputBag;
+    private ParameterBag<Object> inputBag;
 
     private final HttpServletRequest httpServletRequest;
 
@@ -22,9 +22,9 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        headerBag = new ParameterBag.HeaderBag(httpServletRequest);
-        inputBag = new ParameterBag.InputBag(httpServletRequest);
+    public void afterPropertiesSet() {
+        headerBag = new HeaderBag(httpServletRequest);
+        inputBag = new InputBag(httpServletRequest, this);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
 
     @Override
     public String header(String name) {
-        return (String) headerBag.get(name);
+        return headerBag.get(name);
     }
 
     @Override
@@ -47,12 +47,12 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
         return inputBag.has(name);
     }
 
-    public FormRequest only(String[] names) {
+    public Map<String, Object> only(String[] names) {
         return null;
     }
 
 
-    public FormRequest except(String[] names) {
+    public Map<String, Object> except(String[] names) {
         return null;
     }
 
@@ -67,7 +67,7 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
     }
 
     @Override
-    public <T> T get(String name) {
+    public Object get(String name) {
         return null;
     }
 
@@ -78,9 +78,8 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
             return null;
         }
 
-        T value = (T) inputBag.get(name);
 
-
+        return null;
     }
 
     @Override

@@ -102,6 +102,10 @@ tasks.javadoc {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
+
+    options {
+        encoding = "UTF-8"
+    }
 }
 
 tasks.test {
