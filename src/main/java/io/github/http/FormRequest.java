@@ -66,13 +66,7 @@ public class FormRequest implements InteractsWithInput {
     }
 
     @Override
-    public <T extends Object> T input(String name) {
-
-        if (!has(name)) {
-            return null;
-        }
-
-
-        return null;
+    public Object input(String name) {
+        return inputBag.get(name);
     }
 }

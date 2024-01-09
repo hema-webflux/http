@@ -21,6 +21,6 @@ public interface InteractsWithInput {
 
     boolean has(String name);
 
-    <T> T input(String name);
+    Object input(String name);
 
 }
