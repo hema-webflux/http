@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 @Component
 public class FormRequest implements InteractsWithInput {
 
@@ -59,10 +60,7 @@ public class FormRequest implements InteractsWithInput {
 
     public FormRequest merge(Map<String, Object> extra) {
 
-        return this;
-    }
-
-    public FormRequest filter() {
+        inputBag.all().putAll(extra);
 
         return this;
     }
