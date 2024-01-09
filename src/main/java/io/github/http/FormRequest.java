@@ -1,30 +1,23 @@
 package io.github.http;
 
-import io.github.http.contracts.InteractsWithContentTypes;
 import io.github.http.contracts.InteractsWithInput;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.InitializingBean;
+import io.github.http.contracts.ParameterBag;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 @Component
-public class FormRequest implements InteractsWithInput, InteractsWithContentTypes, InitializingBean {
+public class FormRequest implements InteractsWithInput {
 
-    private ParameterBag<String> headerBag;
+    private final ParameterBag<String> headerBag;
 
-    private ParameterBag<Object> inputBag;
+    private final ParameterBag<Object> inputBag;
 
-    private final HttpServletRequest httpServletRequest;
-
-    public FormRequest(HttpServletRequest httpServletRequest) {
-        this.httpServletRequest = httpServletRequest;
-    }
-
-    @Override
-    public void afterPropertiesSet() {
-        headerBag = new HeaderBag(httpServletRequest);
-        inputBag = new InputBag(httpServletRequest, this);
+    public FormRequest(ParameterBag<String> headerBag, ParameterBag<Object> inputBag) {
+        this.headerBag = headerBag;
+        this.inputBag = inputBag;
     }
 
     @Override
@@ -48,11 +41,20 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
     }
 
     public Map<String, Object> only(String[] names) {
-        return null;
+
+        List<String> keys = Arrays.asList(names);
+
+        return inputBag.all().entrySet().stream()
+                .filter(entry -> keys.contains(entry.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public Map<String, Object> except(String[] names) {
-        return null;
+        List<String> keys = Arrays.asList(names);
+
+        return inputBag.all().entrySet().stream()
+                .filter(entry -> !keys.contains(entry.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public FormRequest merge(Map<String, Object> extra) {
@@ -66,11 +68,6 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
     }
 
     @Override
-    public Object get(String name) {
-        return null;
-    }
-
-    @Override
     public <T extends Object> T input(String name) {
 
         if (!has(name)) {
@@ -79,15 +76,5 @@ public class FormRequest implements InteractsWithInput, InteractsWithContentType
 
 
         return null;
-    }
-
-    @Override
-    public boolean isJson() {
-
-        if (!hasHeader("Content-Type")) {
-            return false;
-        }
-
-        return headerBag.get("Content-Type").equals("application/json");
     }
 }
