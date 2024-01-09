@@ -1,4 +1,4 @@
-package io.github.http;
+package io.github.http.contracts;
 
 import java.util.Map;
 

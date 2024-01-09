@@ -21,8 +21,6 @@ public interface InteractsWithInput {
 
     boolean has(String name);
 
-    <T> T get(String name);
-
     <T> T input(String name);
 
 }

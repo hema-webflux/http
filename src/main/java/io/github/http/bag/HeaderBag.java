@@ -1,7 +1,11 @@
-package io.github.http;
+package io.github.http.bag;
 
+import io.github.http.contracts.InteractsWithContentTypes;
+import io.github.http.contracts.ParameterBag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import java.util.Enumeration;
@@ -9,13 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-final class HeaderBag implements ParameterBag<String>, InitializingBean {
+@Scope("prototype")
+public final class HeaderBag implements ParameterBag<String>, InitializingBean, InteractsWithContentTypes {
 
     private final Map<String, String> headers = new HashMap<>();
 
     private final HttpServletRequest httpServletRequest;
 
-    HeaderBag(HttpServletRequest httpServletRequest) {
+    public HeaderBag(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
 
@@ -46,5 +51,14 @@ final class HeaderBag implements ParameterBag<String>, InitializingBean {
                 headers.put(headerName, httpServletRequest.getHeader(headerName));
             }
         }
+    }
+
+    @Override
+    public boolean isJson() {
+        if (httpServletRequest.getContentType() == null) {
+            return false;
+        }
+
+        return httpServletRequest.getContentType().equals(MediaType.APPLICATION_JSON_VALUE);
     }
 }
