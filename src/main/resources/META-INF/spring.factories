@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=github.hema.web.http.provider.FormRequestServiceProvider
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=github.hema.web.http.FormRequestConfiguration

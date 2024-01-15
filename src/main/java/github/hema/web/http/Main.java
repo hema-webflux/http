@@ -1,16 +1,13 @@
 package github.hema.web.http;
 
 
-enum Shrubbery {
-    GROUND,CRAWLING,HANGING
-}
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
 
-//        SpringApplication.run(Main.class, args);
-        for (Shrubbery shrubbery : Shrubbery.values()){
-            System.out.println(shrubbery);
-        }
+        SpringApplication.run(Main.class, args);
     }
 }

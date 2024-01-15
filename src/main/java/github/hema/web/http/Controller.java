@@ -1,5 +1,6 @@
 package github.hema.web.http;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,17 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     @GetMapping("/")
-    public void index( FormRequest formRequest) {
+    public void index(HttpServletRequest httpServletRequest, FormRequest formRequest) {
 
-        formRequest.all().forEach((k, v) -> {
-            System.out.printf("key:%s,value:%s", k, v);
-        });
+        String name = formRequest.input("string");
 
-        formRequest.only(new String[]{"jack","a"});
-
-        formRequest.except(new String[]{"kwg"});
-
-       String a = formRequest.input("");
+        System.out.println(name);
 
     }
 }

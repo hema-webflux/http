@@ -1,20 +1,14 @@
-package github.hema.web.http.bag;
+package github.hema.web.http;
 
 import github.hema.web.http.contracts.InteractsWithContentTypes;
-import github.hema.web.http.contracts.ParameterBag;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
-@Scope("prototype")
-public final class HeaderBag implements ParameterBag<String>, InitializingBean, InteractsWithContentTypes {
+final class HeaderBag implements FormRequest.ParameterBag<String>, InteractsWithContentTypes {
 
     private final Map<String, String> headers = new HashMap<>();
 
@@ -39,7 +33,7 @@ public final class HeaderBag implements ParameterBag<String>, InitializingBean, 
         return headers;
     }
 
-    @Override
+
     public void afterPropertiesSet() {
         Enumeration<String> headerEnum = httpServletRequest.getParameterNames();
 

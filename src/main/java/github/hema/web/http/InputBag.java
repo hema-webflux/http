@@ -1,13 +1,9 @@
-package github.hema.web.http.bag;
+package github.hema.web.http;
 
-import github.hema.web.http.exception.RequestParseException;
 import github.hema.web.http.contracts.InteractsWithContentTypes;
-import github.hema.web.http.contracts.ParameterBag;
+import github.hema.web.http.exception.RequestParseException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,15 +11,13 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
-@Scope("prototype")
-public final class InputBag<T> implements ParameterBag<T>, InitializingBean {
+ final class InputBag implements FormRequest.ParameterBag<Object> {
 
     private final HttpServletRequest httpServletRequest;
 
     private final InteractsWithContentTypes interactsWithContentTypes;
 
-    private Map<String, T> content = null;
+    private Map<String, Object> content = null;
 
     public InputBag(HttpServletRequest httpServletRequest, InteractsWithContentTypes interactsWithContentTypes) {
         this.httpServletRequest = httpServletRequest;
@@ -36,16 +30,16 @@ public final class InputBag<T> implements ParameterBag<T>, InitializingBean {
     }
 
     @Override
-    public T get(String name) {
+    public Object get(String name) {
         return content.get(name);
     }
 
     @Override
-    public Map<String, T> all() {
+    public Map<String, Object> all() {
         return content;
     }
 
-    @Override
+
     public void afterPropertiesSet() {
 
         prepareFormData();
@@ -67,7 +61,7 @@ public final class InputBag<T> implements ParameterBag<T>, InitializingBean {
 
             String key = parameters.nextElement();
 
-            content.put(key, (T) httpServletRequest.getParameter(key));
+            content.put(key, httpServletRequest.getParameter(key));
         }
 
     }
@@ -82,7 +76,7 @@ public final class InputBag<T> implements ParameterBag<T>, InitializingBean {
                 builder.append(line);
             }
 
-            Map<String, T> jsonData = new JSONObject(builder.toString()).toMap();
+            Map<String, Object> jsonData = new JSONObject(builder.toString()).toMap();
 
             if (has()) {
                 content.putAll(jsonData);
@@ -99,3 +93,4 @@ public final class InputBag<T> implements ParameterBag<T>, InitializingBean {
         return content != null;
     }
 }
+
