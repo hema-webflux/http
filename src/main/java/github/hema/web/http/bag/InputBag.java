@@ -1,8 +1,8 @@
-package io.github.http.bag;
+package github.hema.web.http.bag;
 
-import io.github.http.contracts.InteractsWithContentTypes;
-import io.github.http.contracts.ParameterBag;
-import io.github.http.exception.RequestParseException;
+import github.hema.web.http.exception.RequestParseException;
+import github.hema.web.http.contracts.InteractsWithContentTypes;
+import github.hema.web.http.contracts.ParameterBag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,13 +17,13 @@ import java.util.Map;
 
 @Component
 @Scope("prototype")
-public final class InputBag implements ParameterBag<Object>, InitializingBean {
+public final class InputBag<T> implements ParameterBag<T>, InitializingBean {
 
     private final HttpServletRequest httpServletRequest;
 
     private final InteractsWithContentTypes interactsWithContentTypes;
 
-    private Map<String, Object> content = null;
+    private Map<String, T> content = null;
 
     public InputBag(HttpServletRequest httpServletRequest, InteractsWithContentTypes interactsWithContentTypes) {
         this.httpServletRequest = httpServletRequest;
@@ -36,12 +36,12 @@ public final class InputBag implements ParameterBag<Object>, InitializingBean {
     }
 
     @Override
-    public Object get(String name) {
+    public T get(String name) {
         return content.get(name);
     }
 
     @Override
-    public Map<String, Object> all() {
+    public Map<String, T> all() {
         return content;
     }
 
@@ -67,9 +67,7 @@ public final class InputBag implements ParameterBag<Object>, InitializingBean {
 
             String key = parameters.nextElement();
 
-            String value = httpServletRequest.getParameter(key);
-
-            content.put(key, value.isEmpty() ? null : value);
+            content.put(key, (T) httpServletRequest.getParameter(key));
         }
 
     }
@@ -84,7 +82,7 @@ public final class InputBag implements ParameterBag<Object>, InitializingBean {
                 builder.append(line);
             }
 
-            Map<String, Object> jsonData = new JSONObject(builder.toString()).toMap();
+            Map<String, T> jsonData = new JSONObject(builder.toString()).toMap();
 
             if (has()) {
                 content.putAll(jsonData);

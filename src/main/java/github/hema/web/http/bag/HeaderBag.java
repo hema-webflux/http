@@ -1,7 +1,7 @@
-package io.github.http.bag;
+package github.hema.web.http.bag;
 
-import io.github.http.contracts.InteractsWithContentTypes;
-import io.github.http.contracts.ParameterBag;
+import github.hema.web.http.contracts.InteractsWithContentTypes;
+import github.hema.web.http.contracts.ParameterBag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Scope;

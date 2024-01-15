@@ -91,6 +91,8 @@ signing {
 
     useInMemoryPgpKeys(keyId, secretKey, password)
 
+    setRequired(gradle.taskGraph.hasTask("publish"))
+
     sign(publishing.publications["mavenJava"])
 }
 

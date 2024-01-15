@@ -1,19 +1,18 @@
-package io.github.http.provider;
+package github.hema.web.http.provider;
 
-import io.github.http.FormRequest;
-import io.github.http.bag.HeaderBag;
-import io.github.http.bag.InputBag;
+import github.hema.web.http.bag.HeaderBag;
+import github.hema.web.http.bag.InputBag;
+import github.hema.web.http.FormRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
-public class FormRequestConfiguration {
+public class FormRequestServiceProvider {
 
     private final HttpServletRequest httpServletRequest;
 
-    public FormRequestConfiguration(HttpServletRequest httpServletRequest) {
+    public FormRequestServiceProvider(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
 

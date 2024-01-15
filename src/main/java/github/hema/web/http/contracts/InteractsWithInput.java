@@ -1,4 +1,4 @@
-package io.github.http.contracts;
+package github.hema.web.http.contracts;
 
 import java.util.Map;
 
@@ -21,6 +21,6 @@ public interface InteractsWithInput {
 
     boolean has(String name);
 
-    Object input(String name);
+    <T> T input(String name);
 
 }

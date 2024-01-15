@@ -1,4 +1,4 @@
-package io.github.http.contracts;
+package github.hema.web.http.contracts;
 
 public interface InteractsWithContentTypes {
     boolean isJson();
