@@ -1,4 +1,4 @@
-package github.hema.web.http;
+package hema.web.http;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,7 +1,7 @@
-package github.hema.web.http;
+package hema.web.http;
 
-import github.hema.web.http.contracts.InteractsWithContentTypes;
-import github.hema.web.http.exception.RequestParseException;
+import hema.web.http.contracts.InteractsWithContentTypes;
+import hema.web.http.exception.RequestParseException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 

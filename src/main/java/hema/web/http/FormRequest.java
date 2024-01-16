@@ -1,6 +1,6 @@
-package github.hema.web.http;
+package hema.web.http;
 
-import github.hema.web.http.contracts.InteractsWithInput;
+import hema.web.http.contracts.InteractsWithInput;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;

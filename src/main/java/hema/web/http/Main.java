@@ -1,4 +1,4 @@
-package github.hema.web.http;
+package hema.web.http;
 
 
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package github.hema.web.http.contracts;
+package hema.web.http.contracts;
 
 import java.util.Map;
 

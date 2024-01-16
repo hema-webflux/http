@@ -1,10 +1,9 @@
-package github.hema.web.http;
+package hema.web.http;
 
-import github.hema.web.http.contracts.InteractsWithContentTypes;
+import hema.web.http.contracts.InteractsWithContentTypes;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class FormRequestConfiguration {
@@ -16,19 +15,16 @@ public class FormRequestConfiguration {
     }
 
     @Bean
-    @Scope("property")
     public FormRequest formRequest() {
         return new FormRequest(httpServletRequest, headerBag(), inputBag());
     }
 
     @Bean
-    @Scope("property")
     public FormRequest.ParameterBag<Object> inputBag() {
         return new InputBag(httpServletRequest, (InteractsWithContentTypes) headerBag());
     }
 
     @Bean
-    @Scope("property")
     public FormRequest.ParameterBag<String> headerBag() {
         return new HeaderBag(httpServletRequest);
     }
