@@ -1,1 +1,1 @@
-rootProject.name = "validation"
+rootProject.name = "http-foundation"
