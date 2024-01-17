@@ -1,19 +1,21 @@
 package hema.web.http;
 
+import hema.web.http.contracts.InteractsWithContentTypes;
 import hema.web.http.contracts.InteractsWithInput;
+import hema.web.http.contracts.ParameterBag;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 
-public class FormRequest implements InteractsWithInput {
+public class FormRequest  implements InteractsWithInput {
 
-    private final ParameterBag<String> headerBag;
+    private final InteractsWithContentTypes headerBag;
 
     private final ParameterBag<Object> inputBag;
 
     private final HttpServletRequest httpServletRequest;
 
-    public FormRequest(HttpServletRequest httpServletRequest, ParameterBag<String> headerBag, ParameterBag<Object> inputBag) {
+    public FormRequest(HttpServletRequest httpServletRequest, InteractsWithContentTypes headerBag, ParameterBag<Object> inputBag) {
         this.httpServletRequest = httpServletRequest;
         this.headerBag = headerBag;
         this.inputBag = inputBag;
@@ -58,14 +60,5 @@ public class FormRequest implements InteractsWithInput {
 
     public String getMethod() {
         return httpServletRequest.getMethod();
-    }
-
-    public sealed interface ParameterBag<T> permits HeaderBag, InputBag {
-
-        boolean has(String name);
-
-        T get(String name);
-
-        Map<String, T> all();
     }
 }

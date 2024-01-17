@@ -2,13 +2,14 @@ package hema.web.http;
 
 import hema.web.http.contracts.InteractsWithContentTypes;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.MediaType;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-final class HeaderBag implements FormRequest.ParameterBag<String>, InteractsWithContentTypes {
+final class HeaderBag implements InteractsWithContentTypes, InitializingBean {
 
     private final Map<String, String> headers = new HashMap<>();
 
@@ -33,7 +34,7 @@ final class HeaderBag implements FormRequest.ParameterBag<String>, InteractsWith
         return headers;
     }
 
-
+    @Override
     public void afterPropertiesSet() {
         Enumeration<String> headerEnum = httpServletRequest.getParameterNames();
 

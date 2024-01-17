@@ -1,5 +1,5 @@
 package hema.web.http.contracts;
 
-public interface InteractsWithContentTypes {
+public interface InteractsWithContentTypes extends ParameterBag<String> {
     boolean isJson();
 }

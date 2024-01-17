@@ -1,9 +1,11 @@
 package hema.web.http;
 
 import hema.web.http.contracts.InteractsWithContentTypes;
+import hema.web.http.contracts.ParameterBag;
 import hema.web.http.exception.RequestParseException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
- final class InputBag implements FormRequest.ParameterBag<Object> {
+final class InputBag implements ParameterBag<Object>, InitializingBean {
 
     private final HttpServletRequest httpServletRequest;
 
@@ -39,7 +41,7 @@ import java.util.Map;
         return content;
     }
 
-
+    @Override
     public void afterPropertiesSet() {
 
         prepareFormData();

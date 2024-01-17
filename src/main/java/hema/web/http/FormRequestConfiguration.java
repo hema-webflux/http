@@ -1,9 +1,9 @@
 package hema.web.http;
 
 import hema.web.http.contracts.InteractsWithContentTypes;
+import hema.web.http.contracts.ParameterBag;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 
 @Configuration
 public class FormRequestConfiguration {
@@ -14,18 +14,24 @@ public class FormRequestConfiguration {
         this.httpServletRequest = httpServletRequest;
     }
 
-    @Bean
+    @Bean()
+    @Lazy
+    @Scope("singleton")
     public FormRequest formRequest() {
         return new FormRequest(httpServletRequest, headerBag(), inputBag());
     }
 
     @Bean
-    public FormRequest.ParameterBag<Object> inputBag() {
-        return new InputBag(httpServletRequest, (InteractsWithContentTypes) headerBag());
+    @Lazy
+    @Scope("singleton")
+    public ParameterBag<Object> inputBag() {
+        return new InputBag(httpServletRequest, headerBag());
     }
 
     @Bean
-    public FormRequest.ParameterBag<String> headerBag() {
+    @Lazy
+    @Scope("singleton")
+    public InteractsWithContentTypes headerBag() {
         return new HeaderBag(httpServletRequest);
     }
 }

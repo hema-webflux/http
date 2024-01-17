@@ -1,18 +1,24 @@
 package hema.web.http;
 
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 
 @RestController
 public class Controller {
 
+    private final ApplicationContext applicationContext;
+
+    public Controller(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
     @GetMapping("/")
-    public void index(HttpServletRequest httpServletRequest, FormRequest formRequest) {
+    public void index() {
+       FormRequest formRequest = applicationContext.getBean(FormRequest.class);
 
-        String name = formRequest.input("string");
-
-        System.out.println(name);
-
+        System.out.println(formRequest.getClass());
     }
 }
